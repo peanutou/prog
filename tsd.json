@@ -1,0 +1,63 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "node/node.d.ts": {
+      "commit": "ebc69904eb78f94030d5d517b42db20867f679c0"
+    },
+    "rx/rx.d.ts": {
+      "commit": "30387ec3dd6eb426cc48522fd3aef09ada83aa48"
+    },
+    "angular2/angular2.d.ts": {
+      "commit": "30387ec3dd6eb426cc48522fd3aef09ada83aa48"
+    },
+    "es6-promise/es6-promise.d.ts": {
+      "commit": "30387ec3dd6eb426cc48522fd3aef09ada83aa48"
+    },
+    "rx/rx-lite.d.ts": {
+      "commit": "30387ec3dd6eb426cc48522fd3aef09ada83aa48"
+    },
+    "serve-static/serve-static.d.ts": {
+      "commit": "386e1708b9e5cb0d798c63ac43b5d0fc8d0f9bfd"
+    },
+    "mime/mime.d.ts": {
+      "commit": "386e1708b9e5cb0d798c63ac43b5d0fc8d0f9bfd"
+    },
+    "express/express.d.ts": {
+      "commit": "386e1708b9e5cb0d798c63ac43b5d0fc8d0f9bfd"
+    },
+    "cookie-parser/cookie-parser.d.ts": {
+      "commit": "386e1708b9e5cb0d798c63ac43b5d0fc8d0f9bfd"
+    },
+    "body-parser/body-parser.d.ts": {
+      "commit": "386e1708b9e5cb0d798c63ac43b5d0fc8d0f9bfd"
+    },
+    "debug/debug.d.ts": {
+      "commit": "386e1708b9e5cb0d798c63ac43b5d0fc8d0f9bfd"
+    },
+    "morgan/morgan.d.ts": {
+      "commit": "386e1708b9e5cb0d798c63ac43b5d0fc8d0f9bfd"
+    },
+    "serve-favicon/serve-favicon.d.ts": {
+      "commit": "386e1708b9e5cb0d798c63ac43b5d0fc8d0f9bfd"
+    },
+    "gulp/gulp.d.ts": {
+      "commit": "ebc69904eb78f94030d5d517b42db20867f679c0"
+    },
+    "orchestrator/orchestrator.d.ts": {
+      "commit": "ebc69904eb78f94030d5d517b42db20867f679c0"
+    },
+    "q/Q.d.ts": {
+      "commit": "ebc69904eb78f94030d5d517b42db20867f679c0"
+    },
+    "gulp-less/gulp-less.d.ts": {
+      "commit": "ebc69904eb78f94030d5d517b42db20867f679c0"
+    },
+    "gulp-watch/gulp-watch.d.ts": {
+      "commit": "ebc69904eb78f94030d5d517b42db20867f679c0"
+    }
+  }
+}
