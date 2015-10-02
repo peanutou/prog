@@ -1,0 +1,25 @@
+{
+  "name": "prog",
+  "version": "0.0.0",
+  "authors": [
+    "peanutou <peanutou@msn.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "traceur-runtime": "~0.0.91",
+    "system.js": "~0.19.3",
+    "angular": "angular2#~1.4.7",
+    "es6-module-loader": "~0.17.8"
+  }
+}
