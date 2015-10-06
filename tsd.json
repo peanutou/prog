@@ -6,7 +6,7 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
-      "commit": "ebc69904eb78f94030d5d517b42db20867f679c0"
+      "commit": "98d3168c2c570352a3a7393788e2ec9fbb08ade6"
     },
     "rx/rx.d.ts": {
       "commit": "30387ec3dd6eb426cc48522fd3aef09ada83aa48"
@@ -58,6 +58,15 @@
     },
     "gulp-watch/gulp-watch.d.ts": {
       "commit": "ebc69904eb78f94030d5d517b42db20867f679c0"
+    },
+    "bootstrap/bootstrap.d.ts": {
+      "commit": "98d3168c2c570352a3a7393788e2ec9fbb08ade6"
+    },
+    "jquery/jquery.d.ts": {
+      "commit": "98d3168c2c570352a3a7393788e2ec9fbb08ade6"
+    },
+    "mongoose/mongoose.d.ts": {
+      "commit": "98d3168c2c570352a3a7393788e2ec9fbb08ade6"
     }
   }
 }

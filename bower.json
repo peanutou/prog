@@ -20,6 +20,8 @@
     "traceur-runtime": "~0.0.91",
     "system.js": "~0.19.3",
     "angular": "angular2#~1.4.7",
-    "es6-module-loader": "~0.17.8"
+    "es6-module-loader": "~0.17.8",
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5"
   }
 }

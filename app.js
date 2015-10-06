@@ -1,11 +1,14 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+/// <reference path="./typings/tsd.d.ts"/>
 
-var routes = require('./routes/index');
+var express = require('express'),
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    passport = require('passport'),
+    oauthserver = require('oauth2-server'),
+    oauthmodel = require('./model/mongodb/oauth');
 
 var app = express();
 
@@ -14,14 +17,37 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+// setup database
+var db = require('./model/mongodb/db'),
+    user = require('./model/mongodb/user');
+
+// setup authentication
+app.oauth = oauthserver({
+  model: oauthmodel,
+  grants: ['password'],
+  debug: app.get('env') === 'development' ? true : false
+});
+app.auth = require('./routes/api/auth');
+
+// Use the passport package in our application
+app.use(passport.initialize());
+
+// setup routes
+var routes = require('./routes/index'),
+    users = require('./routes/api/users');
+
+app.all('/oauth/token', app.oauth.grant());
+app.use('/api', users);
+app.use('/auth', app.auth.isAuthenticated, routes);
+app.use('/', app.oauth.authorise(), routes);
+app.use(app.oauth.errorHandler());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,7 +70,7 @@ function errorHandlerDevelopment(err, req, res, next) {
 }
 
 if (app.get('env') === 'development') {
-  app.use(errorHandlerDevelopment);
+  //app.use(errorHandlerDevelopment);
 }
 
 // production error handler
