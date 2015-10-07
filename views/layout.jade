@@ -3,9 +3,6 @@ html
   head
     title= title
     link(rel='stylesheet', href='/css/style.css')
-    script(type='text/javascript' src='vendor/lib/traceur-runtime.js')
-    script(type='text/javascript' src='vendor/lib/es6-module-loader.js')
-    script(type='text/javascript' src='vendor/lib/system.js')
-    script(type='text/javascript' src='vendor/lib/angular2.dev.js')    
+    block script
   body
     block content

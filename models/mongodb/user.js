@@ -1,6 +1,4 @@
-/// <reference path="../../typings/tsd.d.ts"/>
-
-// load required packages
+// Load required packages
 var mongoose = require('mongoose'),
 	bcrypt = require('bcrypt-nodejs');
 

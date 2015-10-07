@@ -7,8 +7,7 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     passport = require('passport'),
-    oauthserver = require('oauth2-server'),
-    oauthmodel = require('./model/mongodb/oauth');
+    session = require('express-session');
 
 var app = express();
 
@@ -20,34 +19,33 @@ app.set('view engine', 'jade');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Use express session support since OAuth2orize requires it
+app.use(session({
+    secret: 'Super Secret Session Key',
+    saveUninitialized: true,
+    resave: true
+}))
+
 // setup database
-var db = require('./model/mongodb/db'),
-    user = require('./model/mongodb/user');
+var db = require('./models/mongodb/db'),
+    user = require('./models/mongodb/user'),
+    client = require('./models/mongodb/client'),
+    code = require('./models/mongodb/code'),
+    token = require('./models/mongodb/token');
 
 // setup authentication
-app.oauth = oauthserver({
-  model: oauthmodel,
-  grants: ['password'],
-  debug: app.get('env') === 'development' ? true : false
-});
-app.auth = require('./routes/api/auth');
+app.auth = require('./controllers/auth-strategy');
 
 // Use the passport package in our application
 app.use(passport.initialize());
 
 // setup routes
-var routes = require('./routes/index'),
-    users = require('./routes/api/users');
-
-app.all('/oauth/token', app.oauth.grant());
-app.use('/api', users);
-app.use('/auth', app.auth.isAuthenticated, routes);
-app.use('/', app.oauth.authorise(), routes);
-app.use(app.oauth.errorHandler());
+var routes = require('./controllers/routes');
+app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
