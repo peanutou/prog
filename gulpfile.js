@@ -40,10 +40,11 @@ gulp.task('build.lib.clean', function () {
 
 gulp.task('build.lib', ['build.lib.clean'], function () {
 	return gulp.src([
-			'app/vendor/bower_components/traceur-runtime/traceur-runtime.js',
-			'app/vendor/bower_components/system.js/dist/system.js',
-			'app/vendor/bower_components/es6-module-loader/dist/es6-module-loader.js',
-			'node_modules/angular2/bundles/angular2.dev.js'
+			'node_modules/traceur/bin/traceur-runtime.js',
+			'node_modules/systemjs/dist/system.src.js',
+			'node_modules/angular2/bundles/angular2.dev.js',
+			'node_modules/angular2/bundles/router.dev.js',
+			'node_modules/angular2/bundles/http.dev.js'
 		])
 		.pipe(gulp.dest('public/vendor/lib'));
 });
@@ -54,15 +55,9 @@ gulp.task('build.app.clean', function () {
 	return del(['public/components', 'public/images', 'public/javascripts', 'public/services', 'public/*.*']);
 });
 
-gulp.task('build.app', ['build.app.clean'], function () {
-	var filter = gulpFilter(['*', '!app/vendor'], {restore: true});
-	var tsFilter = gulpFilter('**/*.ts', {restore: true});
-	var lessFilter = gulpFilter('**/*.less', {restore: true});
-	
-	return gulp.src(['app/*'])
-		.pipe(filter)
-		.pipe(tsFilter)
-		.pipe(typescript({ 
+gulp.task('build.app.ts', function () {
+	return gulp.src(['app/**/*.ts'])
+		.pipe(typescript({
 			"emitDecoratorMetadata": true,
 			"experimentalDecorators": true,
 			"target": "ES5",
@@ -70,19 +65,45 @@ gulp.task('build.app', ['build.app.clean'], function () {
 			"outDir": "public",
 			"removeComments": true
 		}))
-		.pipe(tsFilter.restore)
-		.pipe(lessFilter)
-		.pipe(less())
-		.pipe(lessFilter.restore)
 		.pipe(gulp.dest('public'));
+});
+
+gulp.task('build.app.less', function () {
+	return gulp.src(['app/**/*.less', '!app/vendor/**/*.less'])
+		.pipe(less())
+		.pipe(gulp.dest('public'));
+});
+
+gulp.task('build.app.js', function () {	
+	return gulp.src(['app/javascripts/*.js'])
+		.pipe(gulp.dest('public/javascripts'));
+});
+
+gulp.task('build.app.html', function () {	
+	return gulp.src(['app/**/*.html', '!app/vendor/**/*.html'])
+		.pipe(gulp.dest('public'));
+});
+
+gulp.task('build.app.image', function () {	
+	return gulp.src(['app/images/*'])
+		.pipe(gulp.dest('public/images'));
+});
+
+gulp.task('build.app.others', function () {
+	return gulp.src(['app/*.*', '!app/*.less', '!app/*.html', '!app/*.ts'])
+		.pipe(gulp.dest('public'));
+});
+
+gulp.task('build.app', ['build.app.clean'], function () {
+	return runSequence('build.app.ts', 'build.app.less', 'build.app.js', 'build.app.html', 'build.app.image', 'build.app.others');
 });
 
 // build all
 
 gulp.task('build.clean', function () {
-	runSequence('build.less.clean', 'build.lib.clean', 'build.app.clean');	
+	return runSequence('build.less.clean', 'build.lib.clean', 'build.app.clean');	
 });
 
 gulp.task('build', function () {
-	runSequence('build.less', 'build.lib', 'build.app');
+	return runSequence('build.less', 'build.lib', 'build.app');
 });

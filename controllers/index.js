@@ -1,8 +1,4 @@
-var express = require('express');
-var router = express.Router();
-
-router.get('/', function (req, res, next) {
+// Create endpoint /* for all methods
+exports.allIndex = function (req, res, next) {
     res.render('index', { title: 'Prog!' });
-});
-
-module.exports = router;
+};

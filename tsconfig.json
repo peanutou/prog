@@ -10,7 +10,8 @@
         "out": "../../built/local/tsc.js",
         "rootDir": "./app",
         "outDir": "./public",
-        "sourceMap": true
+        "sourceMap": true,
+        "watch": true
     },
     "exclude": [
         "node_modules"

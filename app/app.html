@@ -1,1 +1,10 @@
 <h1 id="output">My First Angular 2 App</h1>
+<section class="sample-app-content">
+  <nav>
+    <a [router-link]="['/Videos']">Video</a>
+    <a [router-link]="['/Home']">Home</a>
+    <a [router-link]="['/About']">About</a>   
+  </nav>
+
+  <router-outlet></router-outlet>
+</section>

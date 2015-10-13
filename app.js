@@ -7,7 +7,8 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     passport = require('passport'),
-    session = require('express-session');
+    session = require('express-session'),
+    serveStatic = require('serve-static');
 
 var app = express();
 
@@ -21,7 +22,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+/*
 app.use(express.static(path.join(__dirname, 'public')));
+*/
+app.use(serveStatic(path.join(__dirname, 'public')));
 
 // Use express session support since OAuth2orize requires it
 app.use(session({
@@ -35,7 +39,8 @@ var db = require('./models/mongodb/db'),
     user = require('./models/mongodb/user'),
     client = require('./models/mongodb/client'),
     code = require('./models/mongodb/code'),
-    token = require('./models/mongodb/token');
+    token = require('./models/mongodb/token'),
+    video = require('./models/mongodb/video');
 
 // setup authentication
 app.auth = require('./controllers/auth-strategy');
@@ -49,9 +54,9 @@ app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handlers
@@ -60,26 +65,26 @@ app.use(function(req, res, next) {
 // will print stacktrace
 
 function errorHandlerDevelopment(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: err
-  });
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: err
+    });
 }
 
 if (app.get('env') === 'development') {
-  //app.use(errorHandlerDevelopment);
+    app.use(errorHandlerDevelopment);
 }
 
 // production error handler
 // no stacktraces leaked to user
 
 function errorHandlerProduction(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: err
-  });
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: {}
+    });
 }
 
 app.use(errorHandlerProduction);

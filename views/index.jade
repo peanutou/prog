@@ -2,9 +2,11 @@ extends layout
 
 block script
     script(type='text/javascript' src='vendor/lib/traceur-runtime.js')
-    script(type='text/javascript' src='vendor/lib/es6-module-loader.js')
-    script(type='text/javascript' src='vendor/lib/system.js')
+    script(type='text/javascript' src='vendor/lib/system.src.js')
     script(type='text/javascript' src='vendor/lib/angular2.dev.js')
+    script(type='text/javascript' src='vendor/lib/router.dev.js')
+    script(type='text/javascript' src='vendor/lib/http.dev.js')
+    script(type='text/javascript' src='javascripts/system.config.js')
 
 block content
   h1= title

@@ -14,9 +14,6 @@
     "angular2/angular2.d.ts": {
       "commit": "30387ec3dd6eb426cc48522fd3aef09ada83aa48"
     },
-    "es6-promise/es6-promise.d.ts": {
-      "commit": "30387ec3dd6eb426cc48522fd3aef09ada83aa48"
-    },
     "rx/rx-lite.d.ts": {
       "commit": "30387ec3dd6eb426cc48522fd3aef09ada83aa48"
     },
@@ -67,6 +64,9 @@
     },
     "mongoose/mongoose.d.ts": {
       "commit": "98d3168c2c570352a3a7393788e2ec9fbb08ade6"
+    },
+    "es6-shim/es6-shim.d.ts": {
+      "commit": "d6c98baa7fd703e449cf37f3ec39ed3bd92cfd35"
     }
   }
 }
