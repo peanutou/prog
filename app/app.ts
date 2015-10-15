@@ -31,7 +31,7 @@ import {VideoService} from './services/video-service';
 @RouteConfig([
   { path: '/Video', component: VideoComponent, as: 'Videos'},
   { path: '/Home', component: HomeComponent, as: 'Home' },
-  { path: '/About', component: AboutComponent, as: 'About' },
+  { path: '/About', component: AboutComponent, as: 'About' }
 ])
 @View({
 	templateUrl: './app.html',
@@ -39,15 +39,22 @@ import {VideoService} from './services/video-service';
   	directives: [ROUTER_DIRECTIVES]
 })
 class AppComponent {
+	public selectedPage: string;
+	
 	constructor(location: Location) {
-		//location.go('/home');
+		location.go('/Home');
+		this.selectedPage = '';
 	}
-};
+	
+	toggle(selectedPage: string) {
+		this.selectedPage = selectedPage;
+	}
+}
 
 bootstrap(AppComponent, [
 	routerBindings(AppComponent),
 	bind(LocationStrategy).toClass(PathLocationStrategy),
-	bind(APP_BASE_HREF).toValue('/'),
+	bind(APP_BASE_HREF).toValue(''),
 	VideoService,
 	Http,
 	HTTP_BINDINGS

@@ -22,7 +22,9 @@
 			"runtimeArgs": ["--nolazy"],
 			// Environment variables passed to the program.
 			"env": {
-				"NODE_ENV": "development"
+				"NODE_ENV": "development",
+				"PORT": "3000",
+				"LR_PORT": "4003"
 			},
 			// Use JavaScript source maps (if they exist).
 			"sourceMaps": false,

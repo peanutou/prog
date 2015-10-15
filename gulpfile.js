@@ -25,20 +25,29 @@ gulp.task('build.less', ['build.less.clean'], function () {
 		.pipe(gulp.dest('public/css'));
 });
 
-gulp.task('build.watch-less', function () {
-	return gulp.src('stylesheets/less/**/*.less')
-		.pipe(watch('stylesheets/less/**/*.less'))
-		.pipe(less())
-		.pipe(gulp.dest('public/css'));
-});
-
-// build lib 
+/**
+ * build lib
+ */
 
 gulp.task('build.lib.clean', function () {
 	return del('public/vendor/lib');
 });
 
-gulp.task('build.lib', ['build.lib.clean'], function () {
+gulp.task('build.lib.bootstrap', function () {
+	return gulp.src([
+			'app/vendor/bower_components/bootstrap/dist/**/*'
+		])
+		.pipe(gulp.dest('public/vendor/lib/bootstrap'));
+});
+
+gulp.task('build.lib.jquery', function () {
+	return gulp.src([
+			'app/vendor/bower_components/jquery/dist/*'
+		])
+		.pipe(gulp.dest('public/vendor/lib/jquery/'));
+});
+
+gulp.task('build.lib.angular2', function () {
 	return gulp.src([
 			'node_modules/traceur/bin/traceur-runtime.js',
 			'node_modules/systemjs/dist/system.src.js',
@@ -47,6 +56,10 @@ gulp.task('build.lib', ['build.lib.clean'], function () {
 			'node_modules/angular2/bundles/http.dev.js'
 		])
 		.pipe(gulp.dest('public/vendor/lib'));
+});
+
+gulp.task('build.lib', ['build.lib.clean'], function () {
+	return runSequence('build.lib.bootstrap', 'build.lib.angular2', 'build.lib.jquery');
 });
 
 // build app
@@ -63,7 +76,8 @@ gulp.task('build.app.ts', function () {
 			"target": "ES5",
 			"module": "commonjs",
 			"outDir": "public",
-			"removeComments": true
+			"removeComments": true,
+			"sourceMap": false
 		}))
 		.pipe(gulp.dest('public'));
 });
@@ -106,4 +120,30 @@ gulp.task('build.clean', function () {
 
 gulp.task('build', function () {
 	return runSequence('build.less', 'build.lib', 'build.app');
+});
+
+// watch
+
+gulp.task('build.watch.less', function () {
+	return gulp.src('stylesheets/less/**/*.less')
+		.pipe(watch('stylesheets/less/**/*.less'))
+		.pipe(less())
+		.pipe(gulp.dest('public/css'));
+});
+
+gulp.task('build.watch.app.html', function () {
+	return gulp.src(['app/**/*.html', '!app/vendor/**', 'app/*.html'])
+		.pipe(watch(['app/**/*.html', '!app/vendor/**', 'app/*.html']))
+		.pipe(gulp.dest('public'));
+});
+
+gulp.task('build.watch.app.less', function () {
+	return gulp.src(['app/**/*.less', '!app/vendor/**', 'app/*.less'])
+		.pipe(watch(['app/**/*.less', '!app/vendor/**', 'app/*.less']))
+		.pipe(less())
+		.pipe(gulp.dest('public'));
+});
+
+gulp.task('build.watch.app.ts', function () {
+	gulp.watch(['app/**/*.ts'], ['build.app.ts']);
 });

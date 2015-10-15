@@ -9,7 +9,7 @@ var express = require('express'),
     passport = require('passport'),
     session = require('express-session'),
     serveStatic = require('serve-static');
-
+    
 var app = express();
 
 // view engine setup
@@ -25,6 +25,10 @@ app.use(cookieParser());
 /*
 app.use(express.static(path.join(__dirname, 'public')));
 */
+if (app.get('env') === 'development') {
+    var liveReload = require('./livereload');
+    app.use(liveReload);
+}
 app.use(serveStatic(path.join(__dirname, 'public')));
 
 // Use express session support since OAuth2orize requires it
@@ -88,6 +92,5 @@ function errorHandlerProduction(err, req, res, next) {
 }
 
 app.use(errorHandlerProduction);
-
 
 module.exports = app;
