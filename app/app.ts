@@ -1,4 +1,4 @@
-/// <reference path="../typings/tsd.d.ts"/>
+/// <reference path="../typings/tsd.d.ts"/> 
 
 import {
 	Component, 
@@ -9,7 +9,7 @@ import {
 import {
 	APP_BASE_HREF,
 	ROUTER_DIRECTIVES, 
-	routerBindings,
+	ROUTER_PROVIDERS,
 	RouteConfig,
 	Location,
 	LocationStrategy,
@@ -24,14 +24,16 @@ import {HomeComponent} from './components/home/home';
 import {AboutComponent} from './components/about/about';
 import {VideoComponent} from './components/video/video';
 import {VideoService} from './services/video-service';
+import {YTVideoService} from './services/ytvideo-service';
+import {GlobalSettings} from './services/global-settings';
 
 @Component({
 	selector: 'prog-app'
 })
 @RouteConfig([
-  { path: '/Video', component: VideoComponent, as: 'Videos'},
-  { path: '/Home', component: HomeComponent, as: 'Home' },
-  { path: '/About', component: AboutComponent, as: 'About' }
+	{ path: '/Video', component: VideoComponent, as: 'Videos'},
+	{ path: '/Home', component: HomeComponent, as: 'Home' },
+	{ path: '/About', component: AboutComponent, as: 'About' }
 ])
 @View({
 	templateUrl: './app.html',
@@ -42,8 +44,8 @@ class AppComponent {
 	public selectedPage: string;
 	
 	constructor(location: Location) {
-		location.go('/Home');
-		this.selectedPage = '';
+		// location.go('/Home');
+		// this.selectedPage = 'Home';
 	}
 	
 	toggle(selectedPage: string) {
@@ -52,11 +54,14 @@ class AppComponent {
 }
 
 bootstrap(AppComponent, [
-	routerBindings(AppComponent),
+	ROUTER_PROVIDERS,
 	bind(LocationStrategy).toClass(PathLocationStrategy),
 	bind(APP_BASE_HREF).toValue(''),
 	VideoService,
+	YTVideoService,
 	Http,
-	HTTP_BINDINGS
+	HTTP_BINDINGS,
+	bind(GlobalSettings).toValue({
+		SERVICE_BASE_URL: 'http://localhost:3000/api/'})
 ]).catch(err => console.error(err));
 

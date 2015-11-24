@@ -1,6 +1,65 @@
-<p>
-  For reward, here is a list of awesome computer scientists!
-</p>
+<label for="basic-url">youtube.com Video URLs</label>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon3">https://www.youtube.com/watch?v=</span>
+  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" (keyup)="doneTyping($event)">
+</div>
+<img src="{{ytvideoService.VideoInfo.iurl}}"/>
 <ul>
-  <li *ng-for="#video of videos.Videos">{{video.title}}</li>
+  <li *ng-for="#stream of ytvideoService.VideoInfo.url_encoded_fmt_stream_map">{{stream}}</li>  
+</ul>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Youtube Videos Todo-List</div>
+  <div class="panel-body">
+    <p>你可以在上面的输入栏中输入多个视频的id，中间用分号“;”隔开。</p>
+    <!-- Tool Bar -->
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        <span>Delete All</span>
+      </button>
+      <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+        <span>Send All</span>        
+      </button>
+      <button type="button" class="btn btn-default">Right</button>
+    </div>
+  </div>
+  <!-- Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>actions</th>
+        <th>source</th>
+        <th>id</th>
+        <th>title</th>
+        <th>caption</th>
+        <th>video</th>
+        <th>cover</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ng-for="#video of TodoList">
+        <th scope="row">{{video._id}}</th>
+        <td>
+          <a (click)="removeTodo($event, video)">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </a>
+          <a (click)="getVideoInfo($event, video)">
+            <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+          </a>
+        </td>
+        <td>{{video.source}}</td>
+        <td>{{video.id}}</td>
+        <td>{{video.title}}</td>
+        <td><div *ng-if="video.caption_file !== ''"><a href="{{video.caption_file}}">caption</a></div></td>
+        <td><div *ng-if="video.video_file !== ''"><a href="{{video.video_file}}">video</a></div></td>
+        <td><img class="video-thumbnail" src="{{video.cover_file}}"/></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ul>
+  <li *ng-for="#video of videoService.Videos">{{video.title}}</li>
 </ul>

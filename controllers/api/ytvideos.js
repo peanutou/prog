@@ -10,7 +10,7 @@ exports = module.exports;
 // Create endpoint /api/users for POST
 exports.getVideoInfo = function (req, res, next) {
 	var videoId = req.params.video_id;
-	var url = ' https://www.youtube.com/get_video_info?video_id=' + videoId + '&asv=2';
+	var url = 'https://www.youtube.com/get_video_info?video_id=' + videoId + '&asv=2';
 	var videoData = '';
 	
 	var request = https.get(url, function(response) {
@@ -21,14 +21,13 @@ exports.getVideoInfo = function (req, res, next) {
 		response.on('end', function () {
 			videoData = decodeURI(videoData);
 			var videoInfo = getQueryParams(videoData);
-			var url_encoded_fmt_stream_map = decodeURI(videoInfo.url_encoded_fmt_stream_map)
-			var url_encoded_fmt_stream_map_array = url_encoded_fmt_stream_map.split(/;\+/g);
-			url_encoded_fmt_stream_map_array = url_encoded_fmt_stream_map_array.map(function (o) {
-				return decodeURIComponent(o);
-			});
-			videoInfo.url_encoded_fmt_stream_map = url_encoded_fmt_stream_map_array;
+			// var url_encoded_fmt_stream_map = decodeURI(videoInfo.url_encoded_fmt_stream_map);
+			// var url_encoded_fmt_stream_map_array = url_encoded_fmt_stream_map.split(/;\+/g);
+			// videoInfo.url_encoded_fmt_stream_map = url_encoded_fmt_stream_map_array;
 
-			res.send(videoInfo.url_encoded_fmt_stream_map[0]);
+			// res.send(videoInfo.url_encoded_fmt_stream_map[0]);
+			// return the whole video information, client should decide how to use it
+			res.send(videoInfo);
 		});
 		response.on('error', function (e) {
 			res.send(e);

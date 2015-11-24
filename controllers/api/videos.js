@@ -11,9 +11,12 @@ exports = module.exports;
 // Create endpoint /api/videos for POST
 exports.postVideos = function (req, res, next) {
 	var video = new Video ({
-		title: req.body.title,
 		source: req.body.source,
 		id: req.body.id,
+		title: req.body.title,
+		captionFile: req.body.caption_file,
+		videoFile: req.body.video_file,
+		coverFile: req.body.cover_file,
 		userId: req.user._id
 	});
 	
