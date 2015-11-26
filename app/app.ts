@@ -62,6 +62,6 @@ bootstrap(AppComponent, [
 	Http,
 	HTTP_BINDINGS,
 	bind(GlobalSettings).toValue({
-		SERVICE_BASE_URL: 'http://localhost:3000/api/'})
+		SERVICE_BASE_URL: 'http://www.peanutou.com/api/'})
 ]).catch(err => console.error(err));
 
