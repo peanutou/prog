@@ -9,7 +9,8 @@ var index = require('./index'),
     users = require('./api/users'),
 	clients = require('./api/clients'),
 	videos = require('./api/videos'),
-	ytvideos = require('./api/ytvideos');
+	ytvideos = require('./api/ytvideos'), 
+	x2 = require('./api/x2');
 
 // TODO:// 设置跨域访问 
 /*
@@ -37,6 +38,16 @@ router.route('/api/clients')
 router.route('/api/videos')
 	.post(auth.isAuthenticated, videos.postVideos)
 	.get(auth.isAuthenticated, videos.getVideos);
+
+// Create endpoint handlers for x2
+router.route('/api/x2/:content_type/:query_string')
+	.get(auth.isAuthenticated, x2.get_x2);
+router.route('/api/x2/:content_type')
+	.get(auth.isAuthenticated, x2.get_x2);
+
+// Create endpoint handlers for get_video_size
+router.route('/api/videos/get_video_size/:url')
+	.get(auth.isAuthenticated, videos.getVideoSize);
 	
 // Create endpoint handlers for oauth2 authorize
 router.route('/api/oauth2/authorize')
