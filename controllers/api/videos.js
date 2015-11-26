@@ -70,6 +70,7 @@ exports.getVideoSize = function (req, res, next) {
 		};	
 		
 	var request = http.request(options, function(response) {
+		console.log(response.headers);
 		res.send({
 					size: response.headers['content-length']
 				 });		
